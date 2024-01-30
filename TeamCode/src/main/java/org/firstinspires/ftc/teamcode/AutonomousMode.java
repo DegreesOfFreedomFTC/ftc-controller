@@ -84,4 +84,8 @@ public class AutonomousMode extends OpMode
     public void loop() {
 
     }
+
+    public void move10() {
+        rightDrive.setPower();
+    }
 }

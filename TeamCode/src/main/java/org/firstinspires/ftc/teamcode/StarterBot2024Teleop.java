@@ -46,8 +46,8 @@ public class StarterBot2024Teleop extends OpMode
     private DcMotor rightDrive = null;
     private DcMotor armLeft = null;
     private DcMotor armRight = null;
-    private Servo gripper = null;
-    private Servo wrist = null;
+//    private Servo gripper = null;
+//    private Servo wrist = null;
 
     private boolean manualMode = false;
     private double armSetpoint = 0.0;
@@ -75,8 +75,8 @@ public class StarterBot2024Teleop extends OpMode
         rightDrive = hardwareMap.get(DcMotor.class, "rightDrive");
         armLeft  = hardwareMap.get(DcMotor.class, "armLeft");
         armRight = hardwareMap.get(DcMotor.class, "armRight");
-        gripper = hardwareMap.get(Servo.class, "gripper");
-        wrist = hardwareMap.get(Servo.class, "wrist");
+//        gripper = hardwareMap.get(Servo.class, "gripper");
+//        wrist = hardwareMap.get(Servo.class, "wrist");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -119,6 +119,39 @@ public class StarterBot2024Teleop extends OpMode
         armRight.setPower(1.0);
         armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        try {
+            wait(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        telemetry.addData("Testing", "1 rotation");
+
+        rightDrive.setTargetPosition(rightDrive.getTargetPosition() + 28);
+        leftDrive.setTargetPosition(leftDrive.getTargetPosition() + 28);
+
+        try {
+            wait(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        telemetry.addData("Testing", "1/2 rotation");
+
+        rightDrive.setTargetPosition(rightDrive.getTargetPosition() + 14);
+        leftDrive.setTargetPosition(leftDrive.getTargetPosition() + 14);
+
+        try {
+            wait(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        telemetry.addData("Testing", "1/4 rotation");
+
+        rightDrive.setTargetPosition(rightDrive.getTargetPosition() + 7);
+        leftDrive.setTargetPosition(leftDrive.getTargetPosition() + 7);
     }
 
     /*
@@ -171,7 +204,7 @@ public class StarterBot2024Teleop extends OpMode
                 armRight.setPower(1.0);
                 armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                wrist.setPosition(wristUpPosition);
+//                wrist.setPosition(wristUpPosition);
             }
             else if (gamepad1.b) {
                 armLeft.setTargetPosition(armIntakePosition);
@@ -180,7 +213,7 @@ public class StarterBot2024Teleop extends OpMode
                 armRight.setPower(1.0);
                 armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                wrist.setPosition(wristDownPosition);
+//                wrist.setPosition(wristDownPosition);
             }
             else if (gamepad1.y) {
                 armLeft.setTargetPosition(armScorePosition);
@@ -189,22 +222,22 @@ public class StarterBot2024Teleop extends OpMode
                 armRight.setPower(1.0);
                 armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                wrist.setPosition(wristUpPosition);
+//                wrist.setPosition(wristUpPosition);
             }
             else if (gamepad1.dpad_up) {
-                wrist.setPosition(wristUpPosition);
+//                wrist.setPosition(wristUpPosition);
                 telemetry.addData("DPAD", "Up");
             }
             else if (gamepad1.dpad_down) {
-                wrist.setPosition(wristDownPosition);
+//                wrist.setPosition(wristDownPosition);
                 telemetry.addData("DPAD", "Down");
             }
             else if (gamepad1.dpad_left) {
-                gripper.setPosition(gripperClosedPosition);
+//                gripper.setPosition(gripperClosedPosition);
                 telemetry.addData("DPAD", "Left");
             }
             else if (gamepad1.dpad_right) {
-                gripper.setPosition(gripperOpenPosition);
+//                gripper.setPosition(gripperOpenPosition);
                 telemetry.addData("DPAD", "Right");
             }
         }
@@ -230,13 +263,13 @@ public class StarterBot2024Teleop extends OpMode
             armRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-        //GRIPPER
-        if (gamepad1.left_bumper || gamepad1.right_bumper) {
-            gripper.setPosition(gripperOpenPosition);
-        }
-        else {
-            gripper.setPosition(gripperClosedPosition);
-        }
+//        //GRIPPER
+//        if (gamepad1.left_bumper || gamepad1.right_bumper) {
+//            gripper.setPosition(gripperOpenPosition);
+//        }
+//        else {
+//            gripper.setPosition(gripperClosedPosition);
+//        }
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Gamepad", "drive (%.2f), turn (%.2f)", drive, turn);

@@ -121,7 +121,7 @@ public class StarterBot2024Teleop extends OpMode
         armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         try {
-            wait(500);
+            wait(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -132,7 +132,7 @@ public class StarterBot2024Teleop extends OpMode
         leftDrive.setTargetPosition(leftDrive.getTargetPosition() + 28);
 
         try {
-            wait(500);
+            wait(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -143,7 +143,7 @@ public class StarterBot2024Teleop extends OpMode
         leftDrive.setTargetPosition(leftDrive.getTargetPosition() + 14);
 
         try {
-            wait(500);
+            wait(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

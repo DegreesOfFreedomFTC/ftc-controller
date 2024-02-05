@@ -82,6 +82,8 @@ public class StarterBot2024Teleop extends OpMode
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
         leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         armLeft.setDirection(DcMotor.Direction.FORWARD);
         armRight.setDirection(DcMotor.Direction.REVERSE);
@@ -89,8 +91,8 @@ public class StarterBot2024Teleop extends OpMode
         armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         armLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        armLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         armLeft.setPower(0.0);
         armRight.setPower(0.0);
 
@@ -119,39 +121,6 @@ public class StarterBot2024Teleop extends OpMode
         armRight.setPower(1.0);
         armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        try {
-            wait(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        telemetry.addData("Testing", "1 rotation");
-
-        rightDrive.setTargetPosition(rightDrive.getTargetPosition() + 28);
-        leftDrive.setTargetPosition(leftDrive.getTargetPosition() + 28);
-
-        try {
-            wait(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        telemetry.addData("Testing", "1/2 rotation");
-
-        rightDrive.setTargetPosition(rightDrive.getTargetPosition() + 14);
-        leftDrive.setTargetPosition(leftDrive.getTargetPosition() + 14);
-
-        try {
-            wait(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        telemetry.addData("Testing", "1/4 rotation");
-
-        rightDrive.setTargetPosition(rightDrive.getTargetPosition() + 7);
-        leftDrive.setTargetPosition(leftDrive.getTargetPosition() + 7);
     }
 
     /*

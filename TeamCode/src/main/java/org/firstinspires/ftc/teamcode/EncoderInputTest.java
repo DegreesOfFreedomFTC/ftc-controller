@@ -1,19 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="Encoder Testing Idek")
-public class EncoderInputTest extends OpMode {
+public class EncoderInputTest extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     private DcMotor rightDrive;
     private DcMotor leftDrive;
 
     @Override
-    public void init() {
+    public void runOpMode() {
         telemetry.addData("Status", "Started");
 
         rightDrive = hardwareMap.get(DcMotor.class, "rightDrive");
@@ -27,25 +28,25 @@ public class EncoderInputTest extends OpMode {
 
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
 
-    @Override
-    public void start() {
+        waitForStart();
+
         runtime.reset();
-    }
 
-    @Override
-    public void loop() {
-        System.out.println("Loop function started");
-        if (gamepad1.a) {
-            rightDrive.setTargetPosition(560);
-            rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightDrive.setPower(0.8);
+        while (opModeIsActive()) {
+            if (gamepad1.a) {
+                rightDrive.setTargetPosition(560);
+                leftDrive.setTargetPosition(560);
+
+                rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                rightDrive.setPower(0.8);
+                leftDrive.setPower(0.8);
+            }
+
+            telemetry.addData("Encoder position", "%7d :%7d", leftDrive.getCurrentPosition(), rightDrive.getCurrentPosition());
+            telemetry.update();
         }
-
-        telemetry.addData("Right encoder position", rightDrive.getCurrentPosition());
-        telemetry.update();
-
-        System.out.println("Loop function ended");
     }
 }

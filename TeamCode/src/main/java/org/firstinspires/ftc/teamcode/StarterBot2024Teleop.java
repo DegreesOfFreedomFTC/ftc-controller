@@ -49,6 +49,8 @@ public class StarterBot2024Teleop extends OpMode
 //    private Servo gripper = null;
 //    private Servo wrist = null;
 
+    private Servo intake = null;
+
     private boolean manualMode = false;
     private double armSetpoint = 0.0;
 
@@ -64,6 +66,8 @@ public class StarterBot2024Teleop extends OpMode
     private final int armScorePosition = 600;
     private final int armShutdownThreshold = 5;
 
+    private final int maxArmLength = 1440;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -77,6 +81,8 @@ public class StarterBot2024Teleop extends OpMode
         armRight = hardwareMap.get(DcMotor.class, "armRight");
 //        gripper = hardwareMap.get(Servo.class, "gripper");
 //        wrist = hardwareMap.get(Servo.class, "wrist");
+
+        intake = hardwareMap.get(Servo.class, "intake");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -142,7 +148,7 @@ public class StarterBot2024Teleop extends OpMode
         rightDrive.setPower(rightPower);
 
         //ARM & WRIST
-        manualArmPower = gamepad1.right_trigger - gamepad1.left_trigger;
+        manualArmPower = gamepad2.right_trigger - gamepad2.left_trigger;
         if (Math.abs(manualArmPower) > armManualDeadband) {
             if (!manualMode) {
                 armLeft.setPower(0.0);
@@ -166,7 +172,7 @@ public class StarterBot2024Teleop extends OpMode
             }
 
             //preset buttons
-            if (gamepad1.a) {
+            if (gamepad2.a) {
                 armLeft.setTargetPosition(armHomePosition);
                 armRight.setTargetPosition(armHomePosition);
                 armLeft.setPower(1.0);
@@ -175,7 +181,7 @@ public class StarterBot2024Teleop extends OpMode
                 armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //                wrist.setPosition(wristUpPosition);
             }
-            else if (gamepad1.b) {
+            else if (gamepad2.b) {
                 armLeft.setTargetPosition(armIntakePosition);
                 armRight.setTargetPosition(armIntakePosition);
                 armLeft.setPower(1.0);
@@ -184,7 +190,7 @@ public class StarterBot2024Teleop extends OpMode
                 armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //                wrist.setPosition(wristDownPosition);
             }
-            else if (gamepad1.y) {
+            else if (gamepad2.y) {
                 armLeft.setTargetPosition(armScorePosition);
                 armRight.setTargetPosition(armScorePosition);
                 armLeft.setPower(1.0);
@@ -193,26 +199,31 @@ public class StarterBot2024Teleop extends OpMode
                 armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //                wrist.setPosition(wristUpPosition);
             }
-            else if (gamepad1.dpad_up) {
+            else if (gamepad2.dpad_up) {
 //                wrist.setPosition(wristUpPosition);
+                intake.setPosition(1);
                 telemetry.addData("DPAD", "Up");
             }
-            else if (gamepad1.dpad_down) {
+            else if (gamepad2.dpad_down) {
 //                wrist.setPosition(wristDownPosition);
+                intake.setPosition(0);
                 telemetry.addData("DPAD", "Down");
             }
-            else if (gamepad1.dpad_left) {
+            else if (gamepad2.dpad_left) {
 //                gripper.setPosition(gripperClosedPosition);
                 telemetry.addData("DPAD", "Left");
             }
-            else if (gamepad1.dpad_right) {
+            else if (gamepad2.dpad_right) {
 //                gripper.setPosition(gripperOpenPosition);
                 telemetry.addData("DPAD", "Right");
+            }
+            else {
+                intake.setPosition(0.5);
             }
         }
 
         //Re-zero encoder button
-        if (gamepad1.start) {
+        if (gamepad2.start) {
             armLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             armLeft.setPower(0.0);

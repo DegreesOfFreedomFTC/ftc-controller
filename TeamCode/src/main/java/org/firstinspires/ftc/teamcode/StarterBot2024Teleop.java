@@ -42,6 +42,7 @@ public class StarterBot2024Teleop extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
+    private double lastBucketMovement = 0;
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private DcMotor armLeft = null;
@@ -50,6 +51,7 @@ public class StarterBot2024Teleop extends OpMode
 //    private Servo wrist = null;
 
     private Servo intake = null;
+    private Servo bucket = null;
 
     private boolean manualMode = false;
     private double armSetpoint = 0.0;
@@ -83,6 +85,7 @@ public class StarterBot2024Teleop extends OpMode
 //        wrist = hardwareMap.get(Servo.class, "wrist");
 
         intake = hardwareMap.get(Servo.class, "intake");
+        bucket = hardwareMap.get(Servo.class, "bucket");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -101,6 +104,8 @@ public class StarterBot2024Teleop extends OpMode
         armRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         armLeft.setPower(0.0);
         armRight.setPower(0.0);
+
+        bucket.setDirection(Servo.Direction.FORWARD);
 
         telemetry.addData("Status", "Initialised");
     }
@@ -217,6 +222,24 @@ public class StarterBot2024Teleop extends OpMode
 //                gripper.setPosition(gripperOpenPosition);
                 telemetry.addData("DPAD", "Right");
             }
+            else if (gamepad2.right_bumper) {
+                if (runtime.seconds() > lastBucketMovement + 0.1) {
+                    double newBucketPosition = bucket.getPosition() + 0.01;
+
+                    bucket.setPosition(newBucketPosition);
+
+                    lastBucketMovement = runtime.seconds();
+                }
+            }
+            else if (gamepad2.left_bumper) {
+                if (runtime.seconds() > lastBucketMovement + 0.1) {
+                    double newBucketPosition = bucket.getPosition() - 0.01;
+
+                    bucket.setPosition(newBucketPosition);
+
+                    lastBucketMovement = runtime.seconds();
+                }
+            }
             else {
                 intake.setPosition(0.5);
             }
@@ -265,6 +288,8 @@ public class StarterBot2024Teleop extends OpMode
                         ((Integer)armLeft.getTargetPosition()).toString() +
                         ", right = " +
                         ((Integer)armRight.getTargetPosition()).toString());
+
+        telemetry.addData("Bucket Pos: ", bucket.getPosition());
     }
 
     /*

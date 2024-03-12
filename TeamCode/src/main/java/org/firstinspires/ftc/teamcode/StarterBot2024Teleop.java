@@ -52,6 +52,7 @@ public class StarterBot2024Teleop extends OpMode
 
     private Servo intake = null;
     private Servo bucket = null;
+    private Servo droneLauncher = null;
 
     private boolean manualMode = false;
     private double armSetpoint = 0.0;
@@ -86,9 +87,10 @@ public class StarterBot2024Teleop extends OpMode
 
         intake = hardwareMap.get(Servo.class, "intake");
         bucket = hardwareMap.get(Servo.class, "bucket");
+        droneLauncher = hardwareMap.get(Servo.class, "droneLauncher");
 
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive.setDirection(DcMotor.Direction.FORWARD);
         leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -145,7 +147,7 @@ public class StarterBot2024Teleop extends OpMode
 
         //DRIVE
         double drive = -gamepad1.left_stick_y;
-        double turn  =  gamepad1.right_stick_x;
+        double turn  = -gamepad1.right_stick_x;
         leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
         rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
@@ -178,13 +180,12 @@ public class StarterBot2024Teleop extends OpMode
 
             //preset buttons
             if (gamepad2.a) {
-                armLeft.setTargetPosition(armHomePosition);
-                armRight.setTargetPosition(armHomePosition);
-                armLeft.setPower(1.0);
-                armRight.setPower(1.0);
-                armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                wrist.setPosition(wristUpPosition);
+                droneLauncher.setPosition(1.0);
+                double timeAtLaunch = runtime.seconds();
+                while (runtime.seconds() < timeAtLaunch + 1) {
+                    // Do nothing. If anyone has a better idea make a PR.
+                }
+                droneLauncher.setPosition(0.5);
             }
             else if (gamepad2.b) {
                 armLeft.setTargetPosition(armIntakePosition);

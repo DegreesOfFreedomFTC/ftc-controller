@@ -44,9 +44,9 @@ public class AutonomousBackRight extends LinearOpMode {
 
         encoderDrive(TURN_SPEED, -29.85, 29.85, 0.5);
         encoderDrive(DRIVE_SPEED, 60.96, 60.96, 0.5);
-        encoderDrive(TURN_SPEED, 29.85, -29.85, 0.5);
-        encoderDrive(DRIVE_SPEED, 121.92, 121.92, 0.5);
-        encoderDrive(TURN_SPEED, 29.85, -29.85, 0.5);
+        encoderDrive(TURN_SPEED, -29.85, 29.85, 0.5);
+        encoderDrive(DRIVE_SPEED, -121.92, -121.92, 0.5);
+        encoderDrive(TURN_SPEED, -29.85, 29.85, 0.5);
         encoderDrive(DRIVE_SPEED, 60.96, 60.96, 0.5);
         encoderDrive(TURN_SPEED, -14.9, 14.9, 0.5);
         encoderDrive(DRIVE_SPEED, 60.96, 60.96, 0.5);
